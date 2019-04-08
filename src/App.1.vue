@@ -1,18 +1,17 @@
 <template>
   <div id="app">
-    <!-- <h1>{{`基于Element-UI组件改造的树形选择器`}}</h1> -->
+    <h1>{{`基于Element-UI组件改造的树形选择器`}}</h1>
     <SelectTree 
       :options="list" 
+      :value="valueId" 
       :props="props"
-      :value="valueId"
       :clearable="true"
-      :multiple="true"
       @getValue="getValue($event)"/>
   </div>
 </template>
 
 <script>
-import SelectTree from "./components/selectTree.vue";
+import SelectTree from "./components/treeSelect.vue";
 
 export default {
   name: "app",
@@ -21,7 +20,7 @@ export default {
   },
   data() {
     return { 
-      valueId:[],      // 选项的初始ID
+      valueId:5,      // 选项的初始ID
       props:{
         value: 'id',
         label: 'title',
@@ -64,11 +63,6 @@ export default {
                   id:7,
                   title:'树形选择器',
                   parentId:6  
-                },
-                {
-                  id:8,
-                  title:'树形下拉框',
-                  parentId:6  
                 }
               ]
             }
@@ -81,7 +75,7 @@ export default {
     // 取值
     getValue(value){
       this.valueId = value
-      // console.log(this.valueId);
+      console.log(this.valueId);
     }
   }
 };

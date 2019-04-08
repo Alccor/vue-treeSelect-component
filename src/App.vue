@@ -1,17 +1,22 @@
 <template>
   <div id="app">
-    <h1>{{`基于Element-UI组件改造的树形选择器`}}</h1>
+    <!-- <h1>{{`基于Element-UI组件改造的树形选择器`}}</h1> -->
+    <div class="checkout">
+      <el-button @click="singleSelect">单选</el-button> <el-button @click="multipleSelect">多选</el-button>
+    </div>
     <SelectTree 
       :options="list" 
-      :value="valueId" 
       :props="props"
-      :clearable="true"
+      :value="valueId"
+      :clearable="isClearable"
+      :accordion="isAccordion"
+      :multiple="isMultiple"
       @getValue="getValue($event)"/>
   </div>
 </template>
 
 <script>
-import SelectTree from "./components/selectTree.vue";
+import SelectTree from "./components/treeSelect.vue";
 
 export default {
   name: "app",
@@ -20,7 +25,10 @@ export default {
   },
   data() {
     return { 
-      valueId:5,      // 选项的初始ID
+      isClearable:true,
+      isAccordion:false,
+      isMultiple:true,
+      valueId:[],      // 选项的初始ID
       props:{
         value: 'id',
         label: 'title',
@@ -63,6 +71,11 @@ export default {
                   id:7,
                   title:'树形选择器',
                   parentId:6  
+                },
+                {
+                  id:8,
+                  title:'树形下拉框',
+                  parentId:6  
                 }
               ]
             }
@@ -71,11 +84,23 @@ export default {
       ]
     };
   },
+  mounted(){
+    // this.singleSelect()
+  },
   methods:{
+    /* 单选 */
+    singleSelect(){
+      this.isMultiple = false
+    },
+    /* 多选 */
+    multipleSelect(){
+      this.isMultiple = true
+      this.valueId = [5,6]
+    },
     // 取值
     getValue(value){
       this.valueId = value
-      console.log(this.valueId);
+      // console.log(this.valueId);
     }
   }
 };
@@ -89,5 +114,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.checkout{
+  margin-bottom:30px;
 }
 </style>
